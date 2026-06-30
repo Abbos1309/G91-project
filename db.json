@@ -3,7 +3,114 @@
     {
       "email": "admin@jobportal.com",
       "password": "admin123",
-      "role": "admin"
+      "role": "admin",
+      "id": "ATdMoMI3Dgo"
     }
-  ]
+  ],
+  "jobs": [
+    {
+      "id": "1",
+      "title": "Full Stack Developerr",
+      "company": "StartupHub",
+      "location": "Remote",
+      "salary": "$100,000 - $140,000",
+      "category": "Technology",
+      "job_type": "Full-time",
+      "description": "Help us build the next generation of web applications. We are looking for a versatile developer who can work across the full stack.",
+      "requirements": [
+        "JavaScript",
+        "Python",
+        "React",
+        "Node.js",
+        "TypeScript"
+      ],
+      "created_at": "2026-06-27T10:15:00.000Z"
+    },
+    {
+      "id": "2",
+      "title": "Sales Representative",
+      "company": "SalesForce Co",
+      "location": "Chicago, IL",
+      "salary": "$70,000 - $100,000 + Commission",
+      "category": "Sales",
+      "job_type": "Full-time",
+      "description": "Drive revenue growth and build relationships with enterprise clients. If you are a results-oriented sales professional, we want to hear from you.",
+      "requirements": [
+        "Sales Experience",
+        "CRM",
+        "Negotiation",
+        "Communication"
+      ],
+      "created_at": "2026-06-27T09:30:00.000Z"
+    },
+    {
+      "id": "3",
+      "title": "Financial Analyst",
+      "company": "Finance Solutions",
+      "location": "Boston, MA",
+      "salary": "$85,000 - $130,000",
+      "category": "Finance",
+      "job_type": "Full-time",
+      "description": "Join our finance team to analyze market data and provide insights for investment decisions.",
+      "requirements": [
+        "Financial Analysis",
+        "Excel",
+        "Python",
+        "SQL",
+        "Data Modeling"
+      ],
+      "created_at": "2026-06-26T14:45:00.000Z"
+    },
+    {
+      "id": "4",
+      "title": "UX/UI Designer",
+      "company": "Design Studio",
+      "location": "New York, NY",
+      "salary": "$90,000 - $120,000",
+      "category": "Design",
+      "job_type": "Full-time",
+      "description": "Join our creative team as a UX/UI Designer. Create beautiful and functional interfaces for our suite of products.",
+      "requirements": [
+        "Figma",
+        "Adobe XD",
+        "User Research",
+        "Wireframing"
+      ],
+      "created_at": "2026-06-26T11:20:00.000Z"
+    },
+    {
+      "id": "5",
+      "title": "Digital Marketing Manager",
+      "company": "MarketingPro",
+      "location": "Los Angeles, CA",
+      "salary": "$80,000 - $110,000",
+      "category": "Marketing",
+      "job_type": "Full-time",
+      "description": "Lead our digital marketing initiatives and drive growth through innovative strategies. We need a creative and data-driven marketing professional.",
+      "requirements": [
+        "Digital Marketing",
+        "Analytics",
+        "Social Media",
+        "SEO"
+      ],
+      "created_at": "2026-06-25T16:00:00.000Z"
+    }
+  ],
+  "applications": [
+    {
+      "id": "app_01",
+      "job_id": "1",
+      "full_name": "Sarah Jenkins",
+      "email": "sarah.j@example.com",
+      "created_at": "2026-06-27T22:11:00.000Z"
+    },
+    {
+      "id": "app_02",
+      "job_id": "4",
+      "full_name": "Alex Rivera",
+      "email": "alex.rivera@example.com",
+      "created_at": "2026-06-27T18:40:00.000Z"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
