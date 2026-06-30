@@ -132,7 +132,7 @@ export default function LoginPage() {
               </button>
             </div>
 
-            {/* Demo ma'lumotlar */}
+            
             <div className="mt-6 bg-slate-50 p-4 rounded-xl text-xs text-slate-500">
               <p className="font-semibold text-slate-700 mb-1">Demo Credentials:</p>
               <p>Email: admin@jobportal.com</p>
