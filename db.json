@@ -94,6 +94,23 @@
         "SEO"
       ],
       "created_at": "2026-06-25T16:00:00.000Z"
+    },
+    {
+      "title": "ui designer",
+      "company": "vangarGroup",
+      "location": "La",
+      "salary": "150000$-200000$",
+      "category": "Design",
+      "job_type": "Remote",
+      "description": "good for those who are looking to gain some experience",
+      "requirements": [
+        "JavaScript",
+        "TypeScript",
+        "Html",
+        "Python"
+      ],
+      "created_at": "2026-06-30T19:39:37.573Z",
+      "id": "_uNFSAaK20E"
     }
   ],
   "applications": [

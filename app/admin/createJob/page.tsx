@@ -2,61 +2,67 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import axios from "axios";
 import { ChevronDown } from "lucide-react";
 
-
+const API_URL = "http://localhost:5000/jobs";
 
 export default function CreateJob() {
-    const [formData, setFormData] = useState({
-        title: "",
-        company: "",
-        location: "",
-        salary: "",
-        category: "Technology",
-        job_type: "Full-time",
-        description: "",
-        requirements: "",
-    });
+
+    const [title, setTitle] = useState("");
+    const [company, setCompany] = useState("");
+    const [location, setLocation] = useState("");
+    const [salary, setSalary] = useState("");
+    const [category, setCategory] = useState("Technology");
+    const [jobType, setJobType] = useState("Full-time");
+    const [description, setDescription] = useState("");
+    const [requirements, setRequirements] = useState("");
 
     const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
 
     const handleReset = () => {
-        setFormData({
-            title: "",
-            company: "",
-            location: "",
-            salary: "",
-            category: "Technology",
-            job_type: "Full-time",
-            description: "",
-            requirements: "",
-        });
-        setMessage(null);
+        setTitle("");
+        setCompany("");
+        setLocation("");
+        setSalary("");
+        setCategory("Technology");
+        setJobType("Full-time");
+        setDescription("");
+        setRequirements("");
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        setMessage(null);
 
-        const requirementsArray = formData.requirements
+        const requirementsArray = requirements
             .split(",")
             .map((req) => req.trim())
             .filter((req) => req !== "");
 
+        try {
+            // Making the request directly using the flat states
+            await axios.post(API_URL, {
+                title,
+                company,
+                location,
+                salary: salary || "Not Specified",
+                category,
+                job_type: jobType,
+                description,
+                requirements: requirementsArray,
+                created_at: new Date().toISOString()
+            });
 
-
-        setLoading(false);
-
-
+            // Clear the form fields directly upon successful addition
+            handleReset();
+            alert("Job added successfully!");
+        } catch (error) {
+            console.error("Failed to add job posting:", error);
+            alert("Error adding job posting");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -78,25 +84,15 @@ export default function CreateJob() {
             <div className="bg-white rounded-xl border border-slate-200/60 shadow-sm p-8">
                 <h2 className="text-xl font-bold text-slate-900 mb-8">Add New Job</h2>
 
-                {message && (
-                    <div
-                        className={`mb-6 p-4 rounded-lg text-sm font-semibold ${message.type === "success" ? "bg-emerald-50 text-emerald-700 border border-emerald-200" : "bg-rose-50 text-rose-700 border border-rose-200"
-                            }`}
-                    >
-                        {message.text}
-                    </div>
-                )}
-
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label className="block text-sm font-bold text-slate-800 mb-2">Job Title *</label>
                             <input
                                 type="text"
-                                name="title"
                                 required
-                                value={formData.title}
-                                onChange={handleChange}
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
                                 placeholder="e.g., Senior Frontend Engineer"
                                 className="w-full bg-slate-50/50 border border-slate-200/80 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-slate-400 text-slate-700 placeholder:text-slate-400 font-medium"
                             />
@@ -105,10 +101,9 @@ export default function CreateJob() {
                             <label className="block text-sm font-bold text-slate-800 mb-2">Company *</label>
                             <input
                                 type="text"
-                                name="company"
                                 required
-                                value={formData.company}
-                                onChange={handleChange}
+                                value={company}
+                                onChange={(e) => setCompany(e.target.value)}
                                 placeholder="e.g., TechCorp"
                                 className="w-full bg-slate-50/50 border border-slate-200/80 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-slate-400 text-slate-700 placeholder:text-slate-400 font-medium"
                             />
@@ -120,10 +115,9 @@ export default function CreateJob() {
                             <label className="block text-sm font-bold text-slate-800 mb-2">Location *</label>
                             <input
                                 type="text"
-                                name="location"
                                 required
-                                value={formData.location}
-                                onChange={handleChange}
+                                value={location}
+                                onChange={(e) => setLocation(e.target.value)}
                                 placeholder="e.g., San Francisco, CA"
                                 className="w-full bg-slate-50/50 border border-slate-200/80 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-slate-400 text-slate-700 placeholder:text-slate-400 font-medium"
                             />
@@ -132,9 +126,8 @@ export default function CreateJob() {
                             <label className="block text-sm font-bold text-slate-800 mb-2">Salary (Optional)</label>
                             <input
                                 type="text"
-                                name="salary"
-                                value={formData.salary}
-                                onChange={handleChange}
+                                value={salary}
+                                onChange={(e) => setSalary(e.target.value)}
                                 placeholder="e.g., $100,000 - $150,000"
                                 className="w-full bg-slate-50/50 border border-slate-200/80 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-slate-400 text-slate-700 placeholder:text-slate-400 font-medium"
                             />
@@ -146,9 +139,8 @@ export default function CreateJob() {
                             <label className="block text-sm font-bold text-slate-800 mb-2">Category</label>
                             <div className="relative">
                                 <select
-                                    name="category"
-                                    value={formData.category}
-                                    onChange={handleChange}
+                                    value={category}
+                                    onChange={(e) => setCategory(e.target.value)}
                                     className="w-full bg-slate-50/50 border border-slate-200/80 rounded-lg px-4 py-2.5 text-sm appearance-none outline-none focus:border-slate-400 text-slate-700 font-medium cursor-pointer"
                                 >
                                     <option value="Technology">Technology</option>
@@ -164,9 +156,8 @@ export default function CreateJob() {
                             <label className="block text-sm font-bold text-slate-800 mb-2">Job Type</label>
                             <div className="relative">
                                 <select
-                                    name="job_type"
-                                    value={formData.job_type}
-                                    onChange={handleChange}
+                                    value={jobType}
+                                    onChange={(e) => setJobType(e.target.value)}
                                     className="w-full bg-slate-50/50 border border-slate-200/80 rounded-lg px-4 py-2.5 text-sm appearance-none outline-none focus:border-slate-400 text-slate-700 font-medium cursor-pointer"
                                 >
                                     <option value="Full-time">Full-time</option>
@@ -182,11 +173,10 @@ export default function CreateJob() {
                     <div>
                         <label className="block text-sm font-bold text-slate-800 mb-2">Description *</label>
                         <textarea
-                            name="description"
                             required
                             rows={5}
-                            value={formData.description}
-                            onChange={handleChange}
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
                             placeholder="Job description and responsibilities..."
                             className="w-full bg-slate-50/50 border border-slate-200/80 rounded-lg p-4 text-sm outline-none focus:border-slate-400 text-slate-700 placeholder:text-slate-400 font-medium resize-none"
                         />
@@ -196,9 +186,8 @@ export default function CreateJob() {
                         <label className="block text-sm font-bold text-slate-800 mb-2">Requirements (comma-separated)</label>
                         <input
                             type="text"
-                            name="requirements"
-                            value={formData.requirements}
-                            onChange={handleChange}
+                            value={requirements}
+                            onChange={(e) => setRequirements(e.target.value)}
                             placeholder="e.g., React, TypeScript, 5+ years experience, Node.js"
                             className="w-full bg-slate-50/50 border border-slate-200/80 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-slate-400 text-slate-700 placeholder:text-slate-400 font-medium"
                         />
